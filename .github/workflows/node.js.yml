@@ -42,19 +42,19 @@ jobs:
         cd codebase/rdicidr-0.1.0
         npm install
 
-    # Run linter (ESLint) from the correct directory
+    # Run linter (ESLint)
     - name: Run linter (ESLint)
       run: |
         cd codebase/rdicidr-0.1.0
         npm run lint
 
-    # Run formatter (Prettier) from the correct directory
+    # Run Prettier (Ensure Prettier is installed)
     - name: Run formatter (Prettier)
       run: |
         cd codebase/rdicidr-0.1.0
         npm run prettier
 
-    # Run tests (Jest) from the correct directory
+    # Run tests (Jest)
     - name: Run tests (Jest)
       env:
         CI: true
@@ -62,7 +62,7 @@ jobs:
         cd codebase/rdicidr-0.1.0
         npm run test
 
-    # Build the project from the correct directory
+    # Build the project
     - name: Build the project
       run: |
         cd codebase/rdicidr-0.1.0
