@@ -20,15 +20,49 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
     - name: set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'
-        cache: 'npm'
+    # Cache Node.js modules with the correct path to package-lock.json
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: codebase/rdicidr-0.1.0/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('codebase/rdicidr-0.1.0/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    # Install dependencies from the codebase/rdicidr-0.1.0 directory
     - name: Install dependencies
       run: |
         cd codebase/rdicidr-0.1.0
         npm install
-    - name: Run tests
-      run: npm test
+
+    # Run linter (ESLint) from the correct directory
+    - name: Run linter (ESLint)
+      run: |
+        cd codebase/rdicidr-0.1.0
+        npm run lint
+
+    # Run formatter (Prettier) from the correct directory
+    - name: Run formatter (Prettier)
+      run: |
+        cd codebase/rdicidr-0.1.0
+        npm run prettier
+
+    # Run tests (Jest) from the correct directory
+    - name: Run tests (Jest)
+      env:
+        CI: true
+      run: |
+        cd codebase/rdicidr-0.1.0
+        npm run test
+
+    # Build the project from the correct directory
+    - name: Build the project
+      run: |
+        cd codebase/rdicidr-0.1.0
+        npm run build
