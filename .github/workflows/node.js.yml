@@ -1,31 +1,32 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: Node.js CI for Custom Path
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: ['14']
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: set up Node.js
+
+    # Set up the correct version of Node.js and npm
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '15.x'  # Set the correct Node.js version (>= 15.0.0 < 16.0.0)
+        check-latest: true
+
+    # Upgrade npm to the required version
+    - name: Upgrade npm to 7.x
+      run: npm install -g npm@7
+
     # Cache Node.js modules with the correct path to package-lock.json
     - name: Cache Node.js modules
       uses: actions/cache@v2
