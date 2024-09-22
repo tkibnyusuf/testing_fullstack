@@ -14,17 +14,17 @@ provider "aws" {
 #  type        = string
 #}
 
-resource "aws_s3_bucket" "app_bucket" {
-  bucket = "my-app-devel-bucket"
+#resource "aws_s3_bucket" "app_bucket" {
+#  bucket = "my-app-devel-bucket"
 
-  versioning {
-    enabled = true
-  }
-  website {
-    index_document = "index.html"
+ # versioning {
+   # enabled = true
+#  }
+#  website {
+#    index_document = "index.html"
     error_document = "error.html"
-  }
-}
+  #}
+#}
 resource "aws_s3_bucket_ownership_controls" "example" {
   bucket = aws_s3_bucket.app_bucket.id
 
@@ -34,12 +34,12 @@ resource "aws_s3_bucket_ownership_controls" "example" {
 }
 
 resource "aws_s3_bucket_object" "app_files" {
-  for_each = fileset("./build", "*")
+  for_each = fileset("./codebase/rdicidr-0.1.0/build", "*")
 
   bucket = aws_s3_bucket.app_bucket.bucket
   key    = each.value
-  source = "./build/${each.value}"
-  etag   = filemd5("./build/${each.value}")
+  source = "./codebase/rdicidr-0.1.0/build/${each.value}"
+  etag   = filemd5("./codebase/rdicidr-0.1.0/build/${each.value}")
   acl    = "public-read"
 }
 
