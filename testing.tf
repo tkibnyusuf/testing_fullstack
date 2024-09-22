@@ -1,37 +1,22 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "5.68.0"
-    }
-  }
-}
 provider "aws" {
-  region = "us-east-1"
+  region = "us-east-1"  # Specify your AWS region
 }
-#variable "environment" {
- # description = "Environment to deploy: devel, stage, prod"
-#  type        = string
-#}
 
-#resource "aws_s3_bucket" "app_bucket" {
-#  bucket = "my-app-devel-bucket"
+# Reference the existing S3 bucket
+data "aws_s3_bucket" "app_bucket" {
+  bucket = "my-app-devel-bucket "  # Replace with your existing bucket name
+}
 
- # versioning {
-   # enabled = true
-#  }
-#  website {
-#    index_document = "index.html"
-#    error_document = "error.html"
-  #}
-#}
+# Upload the build directory files to S3
+resource "aws_s3_bucket_object" "build_files" {
+  for_each = fileset("${path.module}/build", "**")
 
-resource "aws_s3_bucket_object" "app_files" {
-  for_each = fileset("./codebase/rdicidr-0.1.0/build", "*")
-
-  bucket = my-app-devel-bucket
+  bucket = data.aws_s3_bucket.app_bucket.bucket
   key    = each.value
-  source = "./codebase/rdicidr-0.1.0/build/${each.value}"
-  etag   = filemd5("./codebase/rdicidr-0.1.0/build/${each.value}")
-  acl    = "public-read"
+  source = "${path.module}/build/${each.value}"
+  acl    = "public-read"  # Adjust according to your needs
+}
+
+output "bucket_url" {
+  value = data.aws_s3_bucket.app_bucket.website_endpoint
 }
