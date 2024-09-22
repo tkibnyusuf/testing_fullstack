@@ -5,6 +5,7 @@ provider "aws" {
 # Reference the existing S3 bucket
 data "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-devel-bucket"  # Replace with your existing bucket name
+  pubic-acl
 }
 
 # Upload the build directory files to S3
@@ -14,7 +15,7 @@ resource "aws_s3_bucket_object" "build_files" {
   bucket = data.aws_s3_bucket.app_bucket.bucket
   key    = each.value
   source = "${path.module}/build/${each.value}"
-  acl    = "public-read"  # Adjust according to your needs
+ # acl    = "public-read"  # Adjust according to your needs
 }
 
 output "bucket_url" {
