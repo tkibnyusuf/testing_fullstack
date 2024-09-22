@@ -11,6 +11,7 @@ on:
       - stage
       - prod
 
+
 jobs:
   # Job for building and testing on pull requests and development branch
   build:
