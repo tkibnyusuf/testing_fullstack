@@ -15,7 +15,7 @@ resource "aws_s3_bucket_object" "build_files" {
   bucket = data.aws_s3_bucket.app_bucket.bucket
   key    = each.value
   source = "${path.module}/build/${each.value}"
- # acl    = "public-read"  # Adjust according to your needs
+  acl    = "public-read"  # Adjust according to your needs
 
 }
 
