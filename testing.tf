@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 4.0.0"
-    }
-  }
-}
-
 provider "aws" {
   region = "us-east-1"
 }
@@ -22,10 +13,13 @@ resource "aws_s3_bucket" "app_bucket" {
   versioning {
     enabled = true
   }
-  # Ensure that ACLs are not used when BucketOwnerEnforced is set
-  object_ownership {
-    rule = "BucketOwnerEnforced"
+resource "aws_s3_bucket_ownership_controls" "example" {
+  bucket = aws_s3_bucket.app_bucket.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
   }
+}
 
   website {
     index_document = "index.html"
