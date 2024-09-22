@@ -26,7 +26,7 @@ provider "aws" {
   #}
 #}
 resource "aws_s3_bucket_ownership_controls" "example" {
-  bucket = aws_s3_bucket.app_bucket.id
+  bucket = my-app-devel-bucket
 
   rule {
     object_ownership = "BucketOwnerPreferred"
@@ -36,13 +36,9 @@ resource "aws_s3_bucket_ownership_controls" "example" {
 resource "aws_s3_bucket_object" "app_files" {
   for_each = fileset("./codebase/rdicidr-0.1.0/build", "*")
 
-  bucket = aws_s3_bucket.app_bucket.bucket
+  bucket = my-app-devel-bucket
   key    = each.value
   source = "./codebase/rdicidr-0.1.0/build/${each.value}"
   etag   = filemd5("./codebase/rdicidr-0.1.0/build/${each.value}")
   acl    = "public-read"
-}
-
-output "bucket_endpoint" {
-  value = aws_s3_bucket.app_bucket.website_endpoint
 }
