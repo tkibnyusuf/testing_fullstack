@@ -19,6 +19,8 @@ variable "environment_name" {
 
 resource "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-${var.environment_name}-bucket"
+  acl = "private"
+  region = "us-east-1"
 
   versioning {
     enabled = true
@@ -28,6 +30,14 @@ resource "aws_s3_bucket" "app_bucket" {
     index_document = "index.html"
     error_document = "error.html"
   }
+}
+resource "aws_s3_bucket_public_access_block" "public_access_block" {
+  bucket = aws_s3_bucket.app_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
 resource "aws_s3_bucket_policy" "public_read_policy" {
   bucket = aws_s3_bucket.app_bucket.id
