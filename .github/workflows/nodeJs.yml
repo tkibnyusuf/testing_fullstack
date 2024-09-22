@@ -2,9 +2,6 @@ name: CI/CD Workflow
 
 # This workflow runs on different branches based on the provided strategy
 on:
-  pull_request:
-    branches:
-      - devel
   push:
     branches:
       - devel
