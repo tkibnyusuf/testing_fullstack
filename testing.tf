@@ -7,7 +7,6 @@ terraform {
   backend "s3" {
     bucket = "yusuf-docker-tfstate"
     key =  "full/terraform.tfstate"
-    region = "us-east-1"
   }
 }
 
