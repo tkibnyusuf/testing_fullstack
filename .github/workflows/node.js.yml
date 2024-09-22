@@ -73,13 +73,13 @@ jobs:
 
     # Debugging step to list files in the build directory
     - name: List files in the build directory
-      run: ls -la ./build        
+      run: ls -la ./codebase/rdicidr-0.1.0/build        
     # Upload the build directory (e.g., dist or build) as an artifact
     - name: Upload build artifact
       uses: actions/upload-artifact@v3
       with:
         name: build-artifact
-        path: ./build   # Adjust this path to the correct build output folder (e.g., dist or build)        
+        path: ./codebase/rdicidr-0.1.0/build   # Adjust this path to the correct build output folder (e.g., dist or build)        
     # - name: Deploy with Terraform
     #   run: |
     #     terraform init
