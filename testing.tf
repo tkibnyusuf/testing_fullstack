@@ -16,6 +16,7 @@ resource "aws_s3_bucket_object" "build_files" {
   key    = each.value
   source = "${path.module}/build/${each.value}"
  # acl    = "public-read"  # Adjust according to your needs
+
 }
 
 output "bucket_url" {
