@@ -7,14 +7,13 @@ data "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-devel-bucket"  # Replace with your existing bucket name
 }
 
-# Upload the build directory files to S3
 resource "aws_s3_bucket_object" "build_files" {
-  for_each = fileset("${path.module}/build", "**")
+  for_each = fileset("${path.module}/codebase/rdicidr-0.1.0/build", "**")
 
   bucket = data.aws_s3_bucket.app_bucket.bucket
   key    = each.value
-  source = "${path.module}/build/${each.value}"
-  acl    = "public-read"  # Adjust according to your needs
+  source = "${path.module}/codebase/rdicidr-0.1.0/build/${each.value}"
+
   # Set content-type based on file extension
   content_type = lookup(
     {
@@ -27,9 +26,8 @@ resource "aws_s3_bucket_object" "build_files" {
     },
     substr(each.value, length(each.value) - 5, 5), # Get the last part of the file name (extension)
     "application/octet-stream" # Default if not matched
-
+  )
 }
-
 output "bucket_url" {
   value = data.aws_s3_bucket.app_bucket.website_endpoint
 }
