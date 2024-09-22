@@ -25,13 +25,6 @@ provider "aws" {
 #    error_document = "error.html"
   #}
 #}
-resource "aws_s3_bucket_ownership_controls" "example" {
-  bucket = my-app-devel-bucket
-
-  rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}
 
 resource "aws_s3_bucket_object" "app_files" {
   for_each = fileset("./codebase/rdicidr-0.1.0/build", "*")
