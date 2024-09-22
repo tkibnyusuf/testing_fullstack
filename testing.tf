@@ -7,11 +7,11 @@ data "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-devel-bucket"  # Replace with your existing bucket name
 }
 resource "aws_s3_bucket_object" "build_files" {
-  for_each = fileset("${path.module}/codebase/rdicidr-0.1.0/build", "**")
+  for_each = fileset("/home/runner/work/testing_fullstack/testing_fullstack/build", "**")
 
   bucket = data.aws_s3_bucket.app_bucket.bucket
   key    = each.value
-  source = "${path.module}/codebase/rdicidr-0.1.0/build/${each.value}"
+  source = "/home/runner/work/testing_fullstack/testing_fullstack/build/${each.value}"
 
   # Set content-type based on file extension
   content_type = lookup(
