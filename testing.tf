@@ -16,7 +16,6 @@ provider "aws" {
 
 resource "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-devel-bucket"
-  acl    = "public-read"
 
   versioning {
     enabled = true
