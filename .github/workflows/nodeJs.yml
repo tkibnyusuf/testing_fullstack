@@ -106,9 +106,9 @@ jobs:
     # Taint the S3 objects to force re-upload
     - name: Taint S3 Objects
       run: |
-        terraform taint 'aws_s3_bucket_object.build_files["index.html"]'
-        terraform taint 'aws_s3_bucket_object.build_files["*.css"]'
-        terraform taint 'aws_s3_bucket_object.build_files["*.js"]'      
+        terraform taint 'aws_s3_bucket_object.build_files["./codebase/rdicidr-0.1.0/build/index.html"]'
+        terraform taint 'aws_s3_bucket_object.build_files["./codebase/rdicidr-0.1.0/build/style/*.css"]'
+        terraform taint 'aws_s3_bucket_object.build_files["./codebase/rdicidr-0.1.0/build/style/*.js"]'      
 
     # Apply Terraform to upload the build folder to the existing S3 bucket
     - name: Deploy to S3
