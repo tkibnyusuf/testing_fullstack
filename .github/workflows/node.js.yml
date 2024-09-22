@@ -67,6 +67,13 @@ jobs:
       run: |
         cd codebase/rdicidr-0.1.0
         npm run build
+   # Debugging step to list files in the current directory
+    - name: List files in the current directory
+      run: ls -la
+
+    # Debugging step to list files in the build directory
+    - name: List files in the build directory
+      run: ls -la ./build        
     # Upload the build directory (e.g., dist or build) as an artifact
     - name: Upload build artifact
       uses: actions/upload-artifact@v3
