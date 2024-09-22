@@ -13,7 +13,7 @@ resource "aws_s3_bucket_object" "build_files" {
   key    = each.value
   source = "/home/runner/work/testing_fullstack/testing_fullstack/build/${each.value}"
   acl    = "public-read"
-  
+  }
 output "bucket_url" {
   value = data.aws_s3_bucket.app_bucket.website_endpoint
 }
