@@ -134,10 +134,22 @@ jobs:
     # Set up Terraform
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
-
-    # Initialize Terraform
-    - name: Terraform Init
-      run: terraform init    
+    # Initialize and apply Terraform with AWS credentials passed via environment variables
+    - name: Terraform Init and Apply
+      run: |
+        terraform init
+        terraform apply -auto-approve
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}      
+    # Initialize and apply Terraform with AWS credentials passed via environment variables
+    - name: Terraform Init and Apply
+      run: |
+        terraform init
+        terraform apply -auto-approve
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}      
 
     # Apply Terraform to upload the build folder to the existing S3 bucket
     - name: Deploy to S3
@@ -164,17 +176,14 @@ jobs:
     # Set up Terraform
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
-
-    # Initialize Terraform
-    - name: Terraform Init
-      run: terraform init    
-
-    # Apply Terraform to upload the build folder to the existing S3 bucket
-    - name: Deploy to S3
-      run: terraform apply -auto-approve
+    # Initialize and apply Terraform with AWS credentials passed via environment variables
+    - name: Terraform Init and Apply
+      run: |
+        terraform init
+        terraform apply -auto-approve
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         
 
         
