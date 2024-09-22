@@ -9,8 +9,6 @@ terraform {
     dynamodb_table = "app-state"
     key    = "LockID"
     region = "us-east-1"
-    aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
-    aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   }
 }
 
