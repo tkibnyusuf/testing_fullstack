@@ -7,6 +7,8 @@ terraform {
   backend "s3" {
     bucket = "yusuf-docker-tfstate"
     key =  "full/terraform.tfstate"
+    region = us-east-1
+
   }
 }
 
@@ -19,7 +21,6 @@ variable "environment_name" {
 resource "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-${var.environment_name}-bucket"
   acl = "private"
-  region = "us-east-1"
 
   versioning {
     enabled = true
