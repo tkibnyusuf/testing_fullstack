@@ -67,6 +67,12 @@ jobs:
       run: |
         cd codebase/rdicidr-0.1.0
         npm run build
+    # Upload the build directory (e.g., dist or build) as an artifact
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-artifact
+        path: ./build   # Adjust this path to the correct build output folder (e.g., dist or build)        
     - name: Deploy with Terraform
       run: |
         terraform init
