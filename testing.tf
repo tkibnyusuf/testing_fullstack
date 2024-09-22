@@ -19,7 +19,6 @@ variable "environment_name" {
 
 resource "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-${var.environment_name}-bucket"
-  acl    = "public-read"
 
   versioning {
     enabled = true
