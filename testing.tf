@@ -14,6 +14,10 @@ resource "aws_s3_bucket" "app_bucket" {
   versioning {
     enabled = true
   }
+  # Ensure that ACLs are not used when BucketOwnerEnforced is set
+  object_ownership {
+    rule = "BucketOwnerEnforced"
+  }
 
   website {
     index_document = "index.html"
