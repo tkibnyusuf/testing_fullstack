@@ -103,12 +103,15 @@ jobs:
     # Initialize Terraform
     - name: Terraform Init
       run: terraform init
-    # Taint the S3 objects to force re-upload
-    - name: Taint S3 Objects
+    # Taint all S3 Objects to force re-upload
+    - name: Taint all S3 Objects
       run: |
-        terraform taint 'aws_s3_bucket_object.build_files["./codebase/rdicidr-0.1.0/build/index.html"]'
-        terraform taint 'aws_s3_bucket_object.build_files["./codebase/rdicidr-0.1.0/build/style/*.css"]'
-        terraform taint 'aws_s3_bucket_object.build_files["./codebase/rdicidr-0.1.0/build/style/*.js"]'      
+        for file in $(terraform state list | grep 'aws_s3_bucket_object.build_files'); do
+          terraform taint "$file"
+        done
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}      
 
     # Apply Terraform to upload the build folder to the existing S3 bucket
     - name: Deploy to S3
