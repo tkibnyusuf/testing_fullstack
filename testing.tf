@@ -26,7 +26,7 @@ resource "aws_s3_bucket_object" "build_files" {
       ".jpg"  = "image/jpeg"
     },
     substr(each.value, length(each.value) - 5, 5), # Get the last part of the file name (extension)
-    "applicati
+    "application/octet-stream" # Default if not matched
 
 }
 
