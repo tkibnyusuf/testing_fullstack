@@ -5,7 +5,6 @@ provider "aws" {
 # Reference the existing S3 bucket
 data "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-devel-bucket"  # Replace with your existing bucket name
-  pubic-acl
 }
 
 # Upload the build directory files to S3
