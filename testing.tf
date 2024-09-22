@@ -21,17 +21,16 @@ resource "aws_s3_bucket" "app_bucket" {
   versioning {
     enabled = true
   }
+  website {
+    index_document = "index.html"
+    error_document = "error.html"
+  }
+}
 resource "aws_s3_bucket_ownership_controls" "example" {
   bucket = aws_s3_bucket.app_bucket.id
 
   rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}
-
-  website {
-    index_document = "index.html"
-    error_document = "error.html"
+    object_ownership = "BucketOwnerEnforced"
   }
 }
 
