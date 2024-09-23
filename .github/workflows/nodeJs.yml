@@ -12,7 +12,7 @@ on:
 jobs:
   # Job for building and testing on pull requests and development branch
   build:
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/devel'
+    if: github.ref == 'refs/heads/devel' || github.ref == 'refs/heads/stage' || github.ref == 'refs/heads/prod'
     runs-on: ubuntu-latest
 
     steps:
