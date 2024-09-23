@@ -49,10 +49,11 @@ resource "aws_s3_bucket_policy" "public_read_policy" {
         Principal = "*"
         "Action": [
          "s3:PutBucketPolicy",
-         "s3:GetObject"
+         "s3:GetObject",
+         "s3:GetBucketPolicy"
       ],
 
-        Resource = "*"
+        Resource = "${aws_s3_bucket.app_bucket.arn}/*"
       }
     ]
   })
