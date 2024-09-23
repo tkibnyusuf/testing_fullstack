@@ -115,7 +115,7 @@ jobs:
 
  # Job to handle deployment from `devel to stage'
   deploy-to-stage:
-    if: github.ref == 'refs/heads/stage'
+    if: github.ref == 'refs/heads/stage' && github.event.before == 'refs/heads/devel'
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -149,7 +149,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
  # Job to handle deployment from `stage to prod'
   deploy-to-prod:
-    if: github.ref == 'refs/heads/prod'
+    if: github.ref == 'refs/heads/prod' && github.event.before == 'refs/heads/stage'
     needs: build
     runs-on: ubuntu-latest
     steps:
