@@ -20,6 +20,7 @@ variable "environment_name" {
 
 resource "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-${var.environment_name}-bucket"
+  
 
   versioning {
     enabled = true
@@ -28,6 +29,14 @@ resource "aws_s3_bucket" "app_bucket" {
   website {
     index_document = "index.html"
     error_document = "error.html"
+  }
+}
+
+resource "aws_s3_bucket_ownership_controls" "example" {
+  bucket = aws_s3_bucket.app_bucket.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
   }
 }
 resource "aws_s3_bucket_public_access_block" "public_access_block" {
