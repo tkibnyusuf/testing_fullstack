@@ -69,6 +69,10 @@ resource "aws_s3_bucket_object" "build_files" {
     substr(each.value, length(each.value) - 5, 5),
     "application/octet-stream" # Default if not matched
   )
+  # Specify that this resource depends on the ownership controls resource
+  depends_on = [
+    aws_s3_bucket_ownership_controls.example
+  ]
   }
 output "bucket_url" {
   value = aws_s3_bucket.app_bucket.website_endpoint
