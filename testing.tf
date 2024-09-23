@@ -12,6 +12,7 @@ terraform {
   }
 }
 
+
 variable "environment_name" {
   description = "Environment to deploy: devel, stage, prod"
   type        = string
