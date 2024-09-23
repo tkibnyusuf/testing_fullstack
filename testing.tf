@@ -20,6 +20,7 @@ variable "environment_name" {
 
 resource "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-${var.environment_name}-bucket"
+  
 
   versioning {
     enabled = true
@@ -28,6 +29,14 @@ resource "aws_s3_bucket" "app_bucket" {
   website {
     index_document = "index.html"
     error_document = "error.html"
+  }
+}
+
+resource "aws_s3_bucket_ownership_controls" "example" {
+  bucket = aws_s3_bucket.app_bucket.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
   }
 }
 resource "aws_s3_bucket_public_access_block" "public_access_block" {
@@ -60,6 +69,10 @@ resource "aws_s3_bucket_object" "build_files" {
     substr(each.value, length(each.value) - 5, 5),
     "application/octet-stream" # Default if not matched
   )
+  # Specify that this resource depends on the ownership controls resource
+  depends_on = [
+    aws_s3_bucket_ownership_controls.example
+  ]
   }
 output "bucket_url" {
   value = aws_s3_bucket.app_bucket.website_endpoint
