@@ -47,7 +47,11 @@ resource "aws_s3_bucket_policy" "public_read_policy" {
       {
         Effect = "Allow"
         Principal = "*"
-        Action = "s3:GetObject"
+        "Action": [
+         "s3:PutBucketPolicy",
+         "s3:GetBucketPolicy"
+      ],
+
         Resource = "${aws_s3_bucket.app_bucket.arn}/*"
       }
     ]
