@@ -47,7 +47,7 @@ resource "aws_s3_bucket_object" "build_files" {
   bucket = aws_s3_bucket.app_bucket.bucket
   key    = each.value
   source = "/home/runner/work/testing_fullstack/testing_fullstack/build/${each.value}"
- # acl    = "public-read"
+  acl    = "public-read"
   }
 output "bucket_url" {
   value = aws_s3_bucket.app_bucket.website_endpoint
