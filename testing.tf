@@ -38,25 +38,6 @@ resource "aws_s3_bucket_public_access_block" "public_access_block" {
   ignore_public_acls      = false
   restrict_public_buckets = false
 }
-resource "aws_s3_bucket_policy" "public_read_policy" {
-  bucket = aws_s3_bucket.app_bucket.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = "*"
-        "Action": [
-         "s3:GetObject",
-         "s3:GetBucketPolicy"
-      ],
-
-        Resource = "${aws_s3_bucket.app_bucket.arn}/*"
-      }
-    ]
-  })
-}
 
 
 resource "aws_s3_bucket_object" "build_files" {
