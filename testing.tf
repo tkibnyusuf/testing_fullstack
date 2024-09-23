@@ -60,7 +60,6 @@ resource "aws_s3_bucket_policy" "public_read_policy" {
 }
 
 
-
 resource "aws_s3_bucket_object" "build_files" {
   for_each = fileset("/home/runner/work/testing_fullstack/testing_fullstack/build", "**")
 
