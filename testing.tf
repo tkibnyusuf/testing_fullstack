@@ -17,8 +17,8 @@ variable "environment_name" {
   type        = string
 }
 
-resource "aws_s3_bucket_website_configuration" "example" {
-  bucket = aws_s3_bucket.example.id
+resource "aws_s3_bucket_website_configuration" "app_bucket" {
+  bucket = "my-app-${var.environment_name}-bucket"
 
   versioning {
   enabled = true
