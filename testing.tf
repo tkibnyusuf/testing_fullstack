@@ -12,24 +12,24 @@ terraform {
   }
 }
 
+
+
 variable "environment_name" {
   description = "Environment to deploy: devel, stage, prod"
   type        = string
 }
 
-resource "aws_s3_bucket_website" "app_bucket" {
+resource "aws_s3_bucket" "app_bucket" {
   bucket = "my-app-${var.environment_name}-bucket"
+  
 
   versioning {
-  enabled = true
+    enabled = true
   }
 
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "error.html"
+  website {
+    index_document = "index.html"
+    error_document = "error.html"
   }
 }
 
@@ -51,12 +51,12 @@ resource "aws_s3_bucket_public_access_block" "public_access_block" {
 
 
 resource "aws_s3_bucket_object" "build_files" {
-  for_each = fileset("/home/runner/work/testing_fullstack/testing_fullstack/build", "**")
+  for_each = fileset("/home/runner/work/fullstack/fullstack/build", "**")
+
   bucket = aws_s3_bucket.app_bucket.bucket
   key    = each.value
-  source = "/home/runner/work/testing_fullstack/testing_fullstack/build/${each.value}"
+  source = "/home/runner/work/fullstack/fullstack/build/${each.value}"
   acl    = "public-read"
-
   }
 output "bucket_url" {
   value = aws_s3_bucket.app_bucket.website_endpoint
